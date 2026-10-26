@@ -176,14 +176,14 @@ async def get_new_oval_xml(
         select(models.Platform.id).where(models.Platform.name == platform_name)
     ).scalar_subquery()
 
+    # The OVAL document is composed from the records' criteria, tests,
+    # objects, states, variables and references only: the packages and
+    # their build artifacts aren't needed, and loading them for every
+    # record of a platform is what made this query slow
     query = (
         select(models.NewErrataRecord)
         .where(models.NewErrataRecord.platform_id == platform_subq)
         .options(
-            selectinload(models.NewErrataRecord.packages)
-            .selectinload(models.NewErrataPackage.albs_packages)
-            .selectinload(models.NewErrataToALBSPackage.build_artifact)
-            .selectinload(models.BuildTaskArtifact.build_task),
             selectinload(models.NewErrataRecord.references).selectinload(
                 models.NewErrataReference.cve
             ),

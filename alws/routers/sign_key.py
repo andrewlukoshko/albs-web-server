@@ -29,8 +29,7 @@ async def get_sign_keys(
 ):
     keys = await sign_key.get_sign_keys(db, user)
     for key in keys:
-        if key.platforms:
-            key.platform_ids = [pl.id for pl in key.platforms]
+        key.platform_ids = [pl.id for pl in key.platforms]
     return keys
 
 
