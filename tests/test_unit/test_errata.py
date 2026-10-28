@@ -268,6 +268,28 @@ def test_debrand_oval_comment(
             "Corosync provides C APIs for AlmaLinux cluster software.",
             id="description_products",
         ),
+        pytest.param(
+            "Moderate: ansible-collection-redhat-leapp security update",
+            "Moderate: ansible-collection-redhat-leapp security update",
+            id="title_package_name",
+        ),
+        pytest.param(
+            """
+            redhat.leapp Ansible collection that handles RHEL upgrades.
+
+            Security Fix(es):
+
+              * ansible-collection-redhat-leapp: Information disclosure via Leapp report tampering (CVE-2026-68562)
+            """,
+            """
+            redhat.leapp Ansible collection that handles AlmaLinux upgrades.
+
+            Security Fix(es):
+
+              * ansible-collection-redhat-leapp: Information disclosure via Leapp report tampering (CVE-2026-68562)
+            """,
+            id="description_package_name",
+        ),
     ],
 )
 def test_debrand_errata_description_and_title(
